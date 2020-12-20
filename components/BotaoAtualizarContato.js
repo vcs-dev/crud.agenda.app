@@ -1,15 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
 import { Alert, Button, View } from 'react-native';
 import styles from './Styles';
 
-const BotaoAtualizarContato = (props, input) => {
+const BotaoAtualizarContato = (props) => {
     return (
         <View style={styles.containerBotao}>
             <Button
                 onPress={() => {
-                    Alert.alert(JSON.stringify(input))
-                    props.agenda[props.posicao] = {nome: input.nome, telefone: input.telefone}
+                    props.agenda[props.posicao] = {nome: props.nome, telefone: props.telefone}
+                    Alert.alert("Contato atualizado com sucesso")
                 }}
                 title="Atualizar"
                 color="#309cb8"

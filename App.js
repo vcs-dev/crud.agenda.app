@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { View, TextInput, Button, Text, Alert } from 'react-native';
+import { View, Button, Text } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import InputAgenda from './components/InputAgenda';
 import styles from './components/Styles';
-import BotaoAtualizarContato from './components/BotaoAtualizarContato';
-import { useLayoutEffect } from 'react';
 
-let agenda = [
-  {
-    nome: "Jao",
-    telefone: "921929192"
-  }
-]
+let agenda = []
 
 const ItemLista = ({ contato, navigation }) => (
   <View style={styles.itemLista}>
@@ -29,6 +22,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <Button
         title="Novo contato"
+        color="#309cb8"
         onPress={() => navigation.navigate('Novo contato')}
       />
       <View style={{ margin: 1 }}>
@@ -37,6 +31,7 @@ function HomeScreen({ navigation }) {
             navigation.navigate('Lista de contatos', { refresh: ListarContatosScreen })
           }}
           title="Exibir contatos"
+          color="#309cb8"
           accessibilityLabel="Botão para salvar um contato na agenda"
         /> : null}
       </View>
@@ -44,20 +39,16 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function DetalheContatosScreen({ route, navigation }) {
+function DetalheContatosScreen({ route }) {
   const contato = route.params;
-  const posicao = agenda.indexOf(contato);
-
+  let posicao = agenda.indexOf(contato)
   return (
     <View style={styles.container}>
       <InputAgenda
+        agenda={agenda}
         nome={contato.nome}
         telefone={contato.telefone}
-      />
-      <BotaoAtualizarContato 
-        nome={InputAgenda.nome}
-        telefone={InputAgenda.telefone}
-        agenda={agenda}
+        operacao={"editar"}
         posicao={posicao}
       />
     </View>
@@ -84,41 +75,21 @@ function ListarContatosScreen({ navigation }) {
 }
 
 function NovoContatoScreen({ navigation }) {
-  const [nome, setNome] = useState('')
-  const [telefone, setTelefone] = useState('')
+
   return (
     <View style={styles.container}>
       <View style={{ padding: 40 }}>
-        <TextInput
-          style={styles.inputContato}
-          placeholder="Nome"
-          onChangeText={nome => setNome(nome)}
-          defaultValue={nome}
+        <InputAgenda
+          agenda={agenda}
+          operacao={"criar"}
         />
-        <TextInput
-          style={styles.inputContato}
-          placeholder="Telefone"
-          onChangeText={telefone => setTelefone(telefone)}
-          defaultValue={telefone}
-        />
-        <View style={styles.containerBotao}>
-          <Button
-            onPress={() => {
-              agenda.push({ nome: nome, telefone: telefone })
-              if (agenda.length > 0) {
-                HomeScreen
-              }
-            }}
-            title="Salvar"
-            accessibilityLabel="Botão para salvar um contato na agenda"
-          />
-        </View>
         <View style={styles.containerBotao}>
           <Button
             onPress={() => {
               navigation.navigate('Agenda - Home', { refresh: HomeScreen });
             }}
             title="Voltar"
+            color="#309cb8"
             accessibilityLabel="Botão para voltar para a home"
           />
         </View>

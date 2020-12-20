@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import { Alert, Button } from 'react-native';
+import React from 'react';
+import { Alert, Button, View } from 'react-native';
+import styles from './Styles';
 
 const BotaoExcluirContato = (props) => {
-    const [habilitado, setHabilitado] = useState(false);
     return (
-        <Button
-            onPress={() => {
-                props.agenda.splice(props.agenda.indexOf(props.nomeContato), 1);
-                Alert.alert('Contato ' + props.nomeContato + ' excluído com sucesso!');
-                if(props.agenda.length === 0)
-                    setHabilitado(false);
-            }}
-            title="Excluir contato"
-            color="#309cb8"
-            accessibilityLabel="Botão para excluir contato"
-            disabled={!props.habilitado}
-        />
+        <View style={styles.containerBotao}>
+            <Button
+                onPress={() => {
+                    props.agenda.splice(props.posicao, 1);
+                    Alert.alert('Contato excluído com sucesso');
+                }}
+                title="Excluir contato"
+                color="#309cb8"
+                accessibilityLabel="Botão para excluir contato"
+            />
+        </View>
     )
 };
 

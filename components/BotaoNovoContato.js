@@ -15,7 +15,6 @@ const BotaoNovoContato = (props) => {
         }}
         title="Novo contato"
         color="#309cb8"
-
         accessibilityLabel="Botão para criar um novo contato na agenda"
     />
     )
